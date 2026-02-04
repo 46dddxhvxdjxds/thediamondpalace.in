@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | THE DIAMOND PALACE</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        header {
+            position: relative;
+            background: transparent;
+            top: 0;
+            padding: 20px 0;
+        }
+
+
+        .login-wrapper {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eee;
+        }
+
+        .login-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #888;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .dashboard-container {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hide sections by default */
+        .auth-section {
+            display: none;
+        }
+
+        .auth-section.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container header-split">
+            <!-- Left Pill: Logo -->
+            <div class="logo-pill">
+                <a href="index.html" class="logo">THE DIAMOND PALACE</a>
+            </div>
+
+            <!-- Right Pill: Nav + Contact + Login -->
+            <div class="nav-pill">
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="booking.html">Book Now</a>
+                <span class="phone-item"><i class="phone-icon">📞</i> +91 6200650006</span>
+                <a href="admin.html" class="btn-login-outline active">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Container -->
+    <div id="loginContainer" class="container">
+        <div class="login-wrapper">
+            <div class="login-tabs">
+                <button class="tab-btn active" onclick="switchLoginTab('user')">User Login</button>
+                <button class="tab-btn" onclick="switchLoginTab('admin')">Admin Login</button>
+            </div>
+
+            <!-- User Login Form -->
+            <div id="userLoginSection" class="auth-section active">
+                <h3 class="text-center" style="margin-bottom: 20px;">Check Booking Status</h3>
+                <form id="userLoginForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="userLoginName" required placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input type="tel" id="userLoginMobile" required placeholder="Enter booking mobile">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Check Status</button>
+                </form>
+            </div>
+
+            <!-- Admin Login Form -->
+            <div id="adminLoginSection" class="auth-section">
+                <h3 class="text-center" style="margin-bottom: 20px;">Admin Access</h3>
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label>User ID</label>
+                        <input type="text" id="adminUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="adminPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Content -->
+    <div id="adminDashboard" style="display: none; background-color: #f8f9fa; min-height: 80vh;">
+        <div class="container dashboard-container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h1>Admin Dashboard</h1>
+                <button id="logoutBtn" class="btn btn-outline">Logout</button>
+            </div>
+
+            <div
+                style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow-x: auto;">
+                <table class="booking-table">
+                    <thead>
+                        <tr>
+                            <th>Booked Date</th>
+                            <th>Customer Name</th>
+                            <th>Mobile</th>
+                            <th>Payment</th>
+                            <th>Status</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingTableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Dashboard Content -->
+    <div id="userDashboard" style="display: none; min-height: 60vh;">
+        <div class="container dashboard-container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h1>My Bookings</h1>
+                <button id="userLogoutBtn" class="btn btn-outline">Exit</button>
+            </div>
+
+            <div id="userBookingResults" style="display: grid; gap: 20px;">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer id="contact" class="footer-section">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Column 1: Brand -->
+                <div class="footer-col">
+                    <h3 class="footer-logo">THE DIAMOND PALACE</h3>
+                    <p>विलासिता, परंपरा और Extraordinary सेवा के साथ Unforgettable यादें बनाना।</p>
+                </div>
+
+                <!-- Column 2: Links -->
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="booking.html">Book Now</a></li>
+                        <li><a href="admin.html">Admin Login</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Contact -->
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <p>📍 Lala Colony, New Dillian, Dehri, Bihar 821307</p>
+                    <p>📞 +91 6200650006</p>
+                    <p>✉️ thediamondpalace@gmail.com</p>
+                    <p style="margin-top: 10px;">
+                        <a href="https://www.instagram.com/diamond_palace.11?igsh=MWw3eGo1NGFjZmRkZA%3D%3D"
+                            target="_blank"
+                            style="color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 5px;">
+                            <span style="font-size: 1.2rem;">📸</span> Follow on Instagram
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 THE DIAMOND PALACE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Simple tab switcher inline for UI speed
+        function switchLoginTab(type) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.auth-section').forEach(s => s.classList.remove('active'));
+
+            if (type === 'user') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('userLoginSection').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('adminLoginSection').classList.add('active');
+            }
+        }
+    </script>
+</body>
+
+</html>
